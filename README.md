@@ -8,7 +8,6 @@ Additionally, the repository includes a **Graphical User Interface (GUI)** to as
 
 ### **🔧 Prerequisites**
 - **CERN ROOT framework** ([Installation Guide](https://root.cern/install/))
-- **GCC Compiler** (`sudo apt install gcc` for Linux)
 
 ### **🛠 Compiling the Programs**
 To compile the C files with ROOT, navigate to the repository and run:
@@ -20,16 +19,23 @@ source /path/to/root/bin/thisroot.sh
 # Start ROOT
 root
 
-# Compile the simulation of trajectory program for example
+# Compile the simulation of trajectory program or the Monte Carlo simulation
 .L trajectory_final.C
 .L ToyMC().C
 ````
 
 ### **Running the Programs**
 ```bash
-# Run the needed function
-trajectory()
+# Run the needed function among the following
 ToyMC()
+trajectory()
+trajectory3B()
+trajectory_comparison()
+trajectory_scattered()
+simple_vs_scattered()
+trajectory_error()
+trajectory_error3B()
+
 
 ````
 ## Purpose of the Programs
