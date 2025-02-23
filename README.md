@@ -45,4 +45,11 @@ trajectory_error3B()
 Models particle trajectories within the SITRINEO setup.
 Implements multiple scattering effects and different B field conditions.
 Outputs simulation data in ROOT format, and uncertainty results. 
+trajectory() : trajectory through a uniforme B field
+trajectory3B() : trajectory through a 3 region B field 
+trajectory_comparison() : comparison of the two trajectories above
+trajectory_scattered() : trajectory through a uniform B field but with multiple scattering at each plane
+simple_vs_scattered() : comparison of the uncertainty on position with multiple scattering
+trajectory_error() : uncertainty on position with only a uniform B field
+trajectory_error3B() : uncertainty on position using a 3 region B field
 
