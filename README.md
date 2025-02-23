@@ -21,7 +21,7 @@ root
 
 # Compile the simulation of trajectory program or the Monte Carlo simulation
 .L trajectory_final.C
-.L ToyMC().C
+.L ToyMC.C
 ````
 
 ### **Running the Programs**
