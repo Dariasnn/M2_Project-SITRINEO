@@ -4,11 +4,6 @@ This repository is composed of **C programs** designed to be compiled and execut
 
 Additionally, the repository includes a **Graphical User Interface (GUI)** to assist in experiment visualization and data analysis.
 
----
-
-## Repository Structure
----
-
 ## ⚙️ Compilation & Execution
 
 ### **🔧 Prerequisites**
@@ -30,10 +25,11 @@ root
 ````
 
 ### **Running the Programs**
-
+```bash
 # Run the needed function
 trajectory()
 
+````
 ### **Purpose of the Programs**
 
 # Simulation program (trajectory_final.C)
