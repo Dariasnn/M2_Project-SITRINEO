@@ -27,6 +27,7 @@ root
 
 # Compile the simulation of trajectory program for example
 .L trajectory_final.C
+````
 
 ### **Running the Programs**
 
