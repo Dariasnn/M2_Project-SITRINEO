@@ -30,7 +30,7 @@ root
 trajectory()
 
 ````
-# Purpose of the Programs
+## Purpose of the Programs
 
 **Simulation program** (trajectory_final.C)
 
