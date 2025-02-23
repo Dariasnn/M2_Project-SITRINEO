@@ -30,9 +30,9 @@ root
 trajectory()
 
 ````
-### **Purpose of the Programs**
+# Purpose of the Programs
 
-# Simulation program (trajectory_final.C)
+**Simulation program** (trajectory_final.C)
 
 Models particle trajectories within the SITRINEO setup.
 Implements multiple scattering effects and different B field conditions.
