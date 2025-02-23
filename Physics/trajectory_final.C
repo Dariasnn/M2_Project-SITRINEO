@@ -822,7 +822,7 @@ void simple_vs_scattered() {
   int pointIndex = 0;
 
   //Plotting mutliple runs to the compute the mean error
-  for (double i = 0; i <= 100; i += 1) {
+  for (double i = 0; i <= 10; i += 1) {
 
     bool localStopPlot = false; //to stop plotting if the particle won't go to the 3rd plane
 
