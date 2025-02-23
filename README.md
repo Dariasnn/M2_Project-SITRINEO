@@ -22,12 +22,14 @@ root
 
 # Compile the simulation of trajectory program for example
 .L trajectory_final.C
+.L ToyMC().C
 ````
 
 ### **Running the Programs**
 ```bash
 # Run the needed function
 trajectory()
+ToyMC()
 
 ````
 ## Purpose of the Programs
