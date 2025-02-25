@@ -952,7 +952,7 @@ void simple_vs_scattered() {
   TH1F *hist = new TH1F("hist", "Histogram of Impact Positions;Impact Position (um);Number of Entries", 100, -10000, 10000);
   for (double impact : impact_values) {
       hist->Fill(impact);
-      std::cout << "hehe" << std::endl;
+      //std::cout << "hehe" << std::endl;
   }
   hist->SetFillColor(kBlue);
   hist->SetLineColor(kBlack);
