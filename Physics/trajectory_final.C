@@ -1156,7 +1156,7 @@ void trajectory_error() {
   
 
   TMultiGraph *mg = new TMultiGraph();
-  TLegend *legend = new TLegend(0.81, 0.65, 0.98, 0.85);
+  TLegend *legend = new TLegend(0.81, 0.45, 0.98, 0.85);
   
   std::vector<double> Bfield_values;
   std::vector<double> impact_values; //impact point
@@ -1347,7 +1347,7 @@ void trajectory_error3B() {
   
 
   TMultiGraph *mg = new TMultiGraph();
-  TLegend *legend = new TLegend(0.81, 0.65, 0.98, 0.85);
+  TLegend *legend = new TLegend(0.81, 0.45, 0.98, 0.85);
   
   std::vector<double> Bfield_values;
   std::vector<double> impact_values; //impact point
