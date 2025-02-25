@@ -22,6 +22,8 @@ root
 # Compile the simulation of trajectory program or the Monte Carlo simulation
 .L trajectory_final.C
 .L ToyMC.C
+
+# if error message on virtual machine like WSL, close root with .q and start again
 ````
 
 ### **Running the Programs**
