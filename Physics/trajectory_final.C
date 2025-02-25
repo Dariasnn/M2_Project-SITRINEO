@@ -810,7 +810,7 @@ void simple_vs_scattered() {
   
   // Create a MultiGraph to hold both graphs
   TMultiGraph *mg = new TMultiGraph();
-  TLegend *legend = new TLegend(0.81, 0.65, 0.98, 0.85);
+  TLegend *legend = new TLegend(0.81, 0.45, 0.98, 0.85);
 
   // Create graphs for the two trajectories
   TGraph *graph1 = new TGraph(); // Trajectory 1
@@ -822,7 +822,7 @@ void simple_vs_scattered() {
   int pointIndex = 0;
 
   //Plotting mutliple runs to the compute the mean error
-  for (double i = 0; i <= 10; i += 1) {
+  for (double i = 0; i <= 4; i += 1) {
 
     bool localStopPlot = false; //to stop plotting if the particle won't go to the 3rd plane
 
@@ -873,7 +873,7 @@ void simple_vs_scattered() {
     
     mg->Add(graph);
 
-    legend->AddEntry(graph, Form("Run = %.1f T", i), "l");
+    legend->AddEntry(graph, Form("Run = %.1f", i), "l");
 
   }
 
@@ -947,6 +947,26 @@ void simple_vs_scattered() {
   legend->Draw();
   c1->Update();
 
+  // Histogram of Impact Positions
+  TCanvas *c2 = new TCanvas("c2", "Impact Position Histogram", 800, 600);
+  TH1F *hist = new TH1F("hist", "Histogram of Impact Positions;Impact Position (um);Number of Entries", 100, -10000, 10000);
+  for (double impact : impact_values) {
+      hist->Fill(impact);
+      std::cout << "hehe" << std::endl;
+  }
+  hist->SetFillColor(kBlue);
+  hist->SetLineColor(kBlack);
+  hist->Draw();
+  c2->Update();
+
+  // Fit the histogram with a Gaussian function
+  TF1 *gaussFit = new TF1("gaussFit", "gaus", -10000, 10000);
+  hist->Fit(gaussFit, "R");
+  gaussFit->SetLineColor(kRed);
+  gaussFit->Draw("same");
+
+  c2->Update();
+
   double sum_abs_error = 0.0;
   double sum_squared_error = 0.0;
   int N = impact_values.size();
@@ -962,6 +982,146 @@ void simple_vs_scattered() {
 
   std::cout << "Mean Absolute Error (MAE): " << MAE << " µm" << std::endl;
   std::cout << "Root Mean Square Error (RMSE): " << RMSE << " µm" << std::endl;
+
+}
+
+//******************************************************************************
+// 
+// Function to compare the uncertainties between the simple trajectory and the scattered trajectories
+//
+//******************************************************************************
+
+void fitting() {
+
+TRandom3 randGen2;
+  double Par[6] = {
+    randGen2.Gaus(0.02, 0.005),     // thetax (rad)
+    1.32,    // p (MeV/c) - momentum
+    -5000.0,   // zA (um) start of B field
+    5000.0,   // zB (um) end of B field 
+    1.0,      // q (charge) = +1
+    0.1,       // B (T) magnetic field
+  };
+
+  double planeHeight = 19872; // 19.872 mm in µm
+  double planeThickness = 50; // 50 µm thickness
+
+  // Plane positions
+  double planeZ[4] = {
+    -15000.0,        // Plane 1
+    -10000.0,        // Plane 2
+    10000.0,        // Plane 3
+    15000.0         // Plane 4
+  };
+
+  // Physical constants
+  double m_e = 0.511;        // MeV (electron rest mass)
+  double X0 = 21.82;         // g/cm^2 (radiation length for Silicon)
+  double rho = 2.33;         // g/cm^3 (density of Silicon)
+  double thickness = 50e-4;  // cm (50 µm thickness per plane)
+  double E = sqrt(Par[1] * Par[1] + m_e * m_e); // Total energy
+  double beta = Par[1] / E;                // Velocity fraction of c
+
+  TRandom3 randGen;  // Random generator for scattering
+
+  // Highland formula for Multiple Coulomb Scattering (RMS angle)
+  double theta0 = (13.6 / (beta * Par[1])) * fabs(Par[4]) * sqrt(thickness / X0) * (1 + 0.038 * log(thickness / X0));
+  
+  // Create a MultiGraph to hold both graphs
+  TMultiGraph *mg = new TMultiGraph();
+  TLegend *legend = new TLegend(0.81, 0.45, 0.98, 0.85);
+
+  // Create graphs for the two trajectories
+  TGraph *graph1 = new TGraph(); // Trajectory 1
+
+  std::vector<double> impact_values; //impact point
+  std::vector<double> Run_number;
+  std::vector<double> Run_number2;
+  std::vector<double> impact_values_bended;
+
+  double x;
+  int pointIndex = 0;
+
+  //Plotting mutliple runs to the compute the mean error
+  for (double i = 0; i <= 100; i += 1) {
+
+    bool localStopPlot = false; //to stop plotting if the particle won't go to the 3rd plane
+    randGen2.SetSeed(time(0) + i);
+    Par[0] = randGen2.Gaus(0.02, 0.005);
+    std::cout<<"randtheta="<<Par[0]<<std::endl;
+
+    double x, x2, y;
+    int pointIndex = 0;
+
+    randGen.SetSeed(time(0)+i);  // Unique seed based on current time
+    // Multiple scattering angles for each plane
+    double theta[4] = {
+      randGen.Gaus(0, theta0),        // Plane 1
+      randGen.Gaus(0, theta0),        // Plane 2
+      randGen.Gaus(0, theta0),        // Plane 3
+      randGen.Gaus(0, theta0)         // Plane 4
+    };
+
+    for (double z = -30000; z <= 20000; z += 10) { // 5 cm total
+      if (localStopPlot) break;
+
+      double zArray[1] = {z};
+      double zArray2[1] = {z};
+      sitritrajectoryscattered(zArray, &x, Par, planeZ, theta);
+      sitritrajectorybended(zArray2, &x2, Par);
+    
+      if (z == 10000 && x > -planeHeight/2){ //if impact in the plane 3
+        impact_values.push_back(x);
+        std::cout << "impact with plane 3 for run="<< i << " x="<< x << std::endl;
+        Run_number.push_back(i);
+      }
+
+      if (z == 10000 && x2 > -planeHeight/2){ //if impact in the plane 3
+        impact_values_bended.push_back(x2);
+        std::cout << "impact with plane 3 for run="<< i << " x2="<< x2 << std::endl;
+        Run_number2.push_back(i);
+      }
+     
+      pointIndex++;
+    }
+
+  }
+
+  // Histogram of Impact Positions
+  TCanvas *c2 = new TCanvas("c2", "Impact Position Histogram", 800, 600);
+  TH1F *hist = new TH1F("hist", "Histogram of Impact Positions;Impact Position (um);Number of Entries", 100, -10000, 10000);
+  for (double impact : impact_values) {
+      hist->Fill(impact);
+  }
+  hist->SetFillColor(kBlue);
+  hist->SetLineColor(kBlack);
+  hist->Draw();
+  c2->Update();
+
+  // Fit the histogram with a Gaussian function
+  TF1 *gaussFit = new TF1("gaussFit", "gaus", -10000, 10000);
+  hist->Fit(gaussFit, "R");
+  gaussFit->SetLineColor(kRed);
+  gaussFit->Draw("same");
+
+  c2->Update();
+
+  // Histogram of Impact Positions for Bended Trajectories
+  TCanvas *c3 = new TCanvas("c3", "Impact Position Histogram (Bended)", 800, 600);
+  TH1F *hist_bended = new TH1F("hist_bended", "Histogram of Impact Positions (Bended);Impact Position (um);Number of Entries", 100, -10000, 10000);
+  for (double impact : impact_values_bended) {
+      hist_bended->Fill(impact);
+  }
+  hist_bended->SetFillColor(kGreen);
+  hist_bended->SetLineColor(kBlack);
+  hist_bended->Draw();
+    
+  TF1 *gaussFit_bended = new TF1("gaussFit_bended", "gaus", -10000, 10000);
+  hist_bended->Fit(gaussFit_bended, "R");
+  gaussFit_bended->SetLineColor(kRed);
+  gaussFit_bended->Draw("same");
+    
+  c3->Update();
 
 }
 
