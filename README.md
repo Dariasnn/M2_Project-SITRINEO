@@ -33,6 +33,7 @@ trajectory3B()
 trajectory_comparison()
 trajectory_scattered()
 simple_vs_scattered()
+fitting()
 trajectory_error()
 trajectory_error3B()
 
@@ -51,6 +52,7 @@ trajectory3B() : trajectory through a 3 region B field
 trajectory_comparison() : comparison of the two trajectories above
 trajectory_scattered() : trajectory through a uniform B field but with multiple scattering at each plane
 simple_vs_scattered() : comparison of the uncertainty on position with multiple scattering
+fitting() : histograms and gaussian fits on simple and scattered positions
 trajectory_error() : uncertainty on position with only a uniform B field
 trajectory_error3B() : uncertainty on position using a 3 region B field
 
