@@ -22,6 +22,7 @@ root
 # Compile the simulation of trajectory program or the Monte Carlo simulation
 .L trajectory_final.C
 .L ToyMC.C
+.L fitting.C
 
 # if error message on virtual machine like WSL, close root with .q and start again
 ````
@@ -59,4 +60,4 @@ trajectory_error() : uncertainty on position with only a uniform B field
 trajectory_error3B() : uncertainty on position using a 3 region B field
 
 ````
-
+**Uncertainty on position** (fitting.C)
