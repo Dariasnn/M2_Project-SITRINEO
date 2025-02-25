@@ -873,7 +873,7 @@ void simple_vs_scattered() {
     
     mg->Add(graph);
 
-    legend->AddEntry(graph, Form("Run = %.1f", i), "l");
+    legend->AddEntry(graph, Form("Run = %.2f", i), "l");
 
   }
 
@@ -1208,7 +1208,7 @@ void trajectory_error() {
     
     mg->Add(graph);
 
-    legend->AddEntry(graph, Form("B = %.1f T", b), "l");
+    legend->AddEntry(graph, Form("B = %.2f T", b), "l");
 
   }
 
