@@ -1,3 +1,5 @@
+//by D.SENINA february 2025
+
 #include <iostream>
 #include <cmath>
 #include <vector>
