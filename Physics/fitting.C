@@ -15,6 +15,8 @@
 // trajectory_scattered()
 // fitting()
 
+//created by D.SENINA and R.TECHI in february 2025
+
 
 
 void sitritrajectorybended(double *z, double *x, double *Par){
