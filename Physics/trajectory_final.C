@@ -1,5 +1,3 @@
-//by D.SENINA february 2025
-
 #include <iostream>
 #include <cmath>
 #include <vector>
@@ -20,6 +18,8 @@
 // trajectory_comparison() 
 // trajectory_scattered()
 // simple_vs_scattered()
+
+//created by D.SENINA and R.TECHI in february 2025
 
 
 
