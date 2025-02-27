@@ -13,7 +13,7 @@ Additionally, the repository includes a **Graphical User Interface (GUI)** to as
 To compile the C files with ROOT, navigate to the repository and run:
 
 ```bash
-# Load ROOT environment (modify path if needed)
+# Load ROOT environment (modify path)
 source /path/to/root/bin/thisroot.sh
 
 # Start ROOT
