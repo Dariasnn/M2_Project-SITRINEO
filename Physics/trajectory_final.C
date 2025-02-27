@@ -61,7 +61,7 @@ void sitritrajectorybended(double *z, double *x, double *Par){
       x[0] = xA + q * (-xC + sqrt(Delta));
     }
   } 
-  else if (z[0] == zB) { // Start B field
+  else if (z[0] == zB) { // End B field
     Delta = R * R - std::pow(z[0] - zA - R * sin(q * thetax), 2.0);
     if (Delta < 0) {
       xB = 0;
